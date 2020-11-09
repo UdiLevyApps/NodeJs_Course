@@ -1,0 +1,20 @@
+[
+  {
+    "id": "ed57ecc3-6d88-4cfa-bd7f-1fd70e23924f",
+    "categoryId": "Jane Doe",
+    "name":"the name",
+    "itemInStock":4
+  },
+  {
+    "id": "ed57ecc3-6d88-4cfa-bd7f-1fd70e23943f",
+    "categoryId": "Jane Doe",
+    "name":"the name",
+    "itemInStock":4
+  },
+  {
+    "id": "ed57ecc3-6d88-4cfa-bd7f-1fd70e23944f",
+    "categoryId": "Jane Doe",
+    "name":"the name",
+    "itemInStock":4
+  }
+]
