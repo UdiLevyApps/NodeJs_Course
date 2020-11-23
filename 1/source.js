@@ -1,4 +1,4 @@
-const { log } = require('console');
+
 const events = require('events');
 const app = require('./app');
 

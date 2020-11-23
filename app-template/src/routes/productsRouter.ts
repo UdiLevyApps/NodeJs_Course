@@ -1,14 +1,10 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { generateId } from '../utils/id-helper';
 import productData from '../assets/products.json';
+import { Product } from '../model/Product';
+import { validateIdLength, validNameLength } from '../validation/routeDataValidation';
+import { NetResponse, translate } from '../Constants/Constants';
 
-interface Product {
-  id: string;
-  categoryId: string;
-  name: string;
-  itemInStock: number;
-}
-const MIN_NAME_LENGTH = 3;
 const INVALID = 409;
 const SUCCESS = 200;
 const SUCCESS_CREATION = 201;
@@ -22,8 +18,8 @@ const routerProduct = Router();
 
 const resolveProductPutNameHandler = (req: Request, res: Response, next: NextFunction): void => {
   const product = req.body as Product;
-  if (product.name.length < MIN_NAME_LENGTH) {
-    res.sendStatus(INVALID);
+  if (!validNameLength(product.name)) {
+    res.sendStatus(translate(NetResponse.INVALID));
     return;
   }
   next();
@@ -33,13 +29,13 @@ routerProduct.all('/:id', (req, res, next) => {
   const productId = req.params.id;
   const productIndex = products.findIndex((p) => p.id === productId);
 
-  if (productId.length != 36) {
-    res.sendStatus(BAD_REQUEST_VALIDATION);
+  if (!validateIdLength(req.params.id)) {
+    res.sendStatus(translate(NetResponse.BAD_REQUEST_VALIDATION));
     return;
   }
 
   if (productIndex < 0) {
-    res.sendStatus(NO_FOUND);
+    res.sendStatus(translate(NetResponse.NO_FOUND));
     return;
   }
 
@@ -49,13 +45,13 @@ routerProduct.all('/:id', (req, res, next) => {
   next();
 });
 
-routerProduct.get('/', (req, res) => res.status(SUCCESS).send(products));
+routerProduct.get('/', (req, res) => res.status(translate(NetResponse.SUCCESS)).send(products));
 
 routerProduct.post('/', resolveProductPutNameHandler, (req, res) => {
   const product = req.body as Product;
   product.id = generateId();
   products.push(product);
-  res.status(SUCCESS_CREATION).send(product);
+  res.status(translate(NetResponse.SUCCESS_CREATION)).send(product);
 });
 
 routerProduct.get('/:id', (req, res) => {
@@ -66,12 +62,12 @@ routerProduct.put('/:id', resolveProductPutNameHandler, (req, res) => {
   const product = req.body as Product;
   product.id = res.locals.product.id;
   Object.assign(res.locals.product, product);
-  res.status(SUCCESS).send(res.locals.product);
+  res.status(translate(NetResponse.SUCCESS)).send(res.locals.product);
 });
 
 routerProduct.delete('/:id', (req, res) => {
   products.splice(res.locals.productIndex, 1);
-  res.sendStatus(NO_CONTENT);
+  res.sendStatus(translate(NetResponse.NO_CONTENT));
 });
 
 export { routerProduct };
