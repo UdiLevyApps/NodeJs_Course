@@ -19,6 +19,8 @@ const resolveProductPutNameHandler = (req: Request, res: Response, next: NextFun
 };
 
 routerProduct.all('/:id', (req, res, next) => {
+  console.log('in routerProduct all validation');
+
   const productId = req.params.id;
   const productIndex = products.findIndex((p) => p.id === productId);
 
