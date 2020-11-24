@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { generateId } from '../utils/id-helper';
 import categoryData from '../assets/categories.json';
 import { Category } from '../model/Category';
-import { validateIdLength,  } from '../validation/routeDataValidation';
+import { validateIdLength } from '../validation/routeDataValidation';
 import { NetResponse, translate } from '../Constants/Constants';
 
 import { Product } from '../model/Product';

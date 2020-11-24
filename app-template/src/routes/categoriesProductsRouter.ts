@@ -1,11 +1,8 @@
-// import { NextFunction, Request, Response, Router , express } from 'express';
-
 import { Router } from 'express';
 import { validateIdLength } from '../validation/routeDataValidation';
 import categoryData from '../assets/categories.json';
 import { Category } from '../model/Category';
 import { NetResponse, translate } from '../Constants/Constants';
-import { NOTFOUND } from 'dns';
 
 // import { Product } from '../model/Product';
 // import productData from '../assets/products.json';
