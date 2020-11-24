@@ -22,7 +22,7 @@ function translate(x: NetResponse): number {
       break;
 
     case NetResponse.NO_CONTENT:
-      console.log('Error response - NO_CONTENT');
+      console.log('Success response - NO_CONTENT');
       break;
 
     case NetResponse.NO_FOUND:
