@@ -48,7 +48,7 @@ routerProduct.post('/', resolveProductPutNameHandler, (req, res) => {
 });
 
 routerProduct.get('/:id', (req, res) => {
-  res.status(SUCCESS).send(res.locals.product);
+  res.status(translate(NetResponse.SUCCESS)).send(res.locals.product);
 });
 
 routerProduct.put('/:id', resolveProductPutNameHandler, (req, res) => {
