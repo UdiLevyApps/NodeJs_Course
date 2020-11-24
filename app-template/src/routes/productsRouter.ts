@@ -5,13 +5,6 @@ import { Product } from '../model/Product';
 import { validateIdLength, validNameLength } from '../validation/routeDataValidation';
 import { NetResponse, translate } from '../Constants/Constants';
 
-const INVALID = 409;
-const SUCCESS = 200;
-const SUCCESS_CREATION = 201;
-const NO_CONTENT = 204;
-const NO_FOUND = 404;
-const BAD_REQUEST_VALIDATION = 400;
-
 const products: Product[] = productData;
 
 const routerProduct = Router();
