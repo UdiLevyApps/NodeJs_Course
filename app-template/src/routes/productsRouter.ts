@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response, Router } from 'express';
 import { generateId } from '../utils/id-helper';
-import productData from '../assets/products.json';
+import { getProducts } from '../store/product-store';
 import { Product } from '../model/Product';
 import { validateIdLength, validNameLength } from '../validation/routeDataValidation';
 import { NetResponse, translate } from '../Constants/Constants';
 
-const products: Product[] = productData;
+const products: Product[] = getProducts();
 
 const routerProduct = Router();
 

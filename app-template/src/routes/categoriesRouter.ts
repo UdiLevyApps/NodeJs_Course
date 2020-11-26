@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { generateId } from '../utils/id-helper';
-import categoryData from '../assets/categories.json';
+import { getCategories } from '../store/category-store';
 import { Category } from '../model/Category';
 import { validateIdLength } from '../validation/routeDataValidation';
 import { NetResponse, translate } from '../Constants/Constants';
@@ -10,7 +10,7 @@ import productData from '../assets/products.json';
 
 import { routerCategoryProducts } from '../routes/categoriesProductsRouter';
 
-const categorys: Category[] = categoryData;
+const categorys: Category[] = getCategories();
 const products: Product[] = productData;
 
 const routerCategory = Router();

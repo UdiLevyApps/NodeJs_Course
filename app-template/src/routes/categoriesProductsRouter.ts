@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { validateIdLength } from '../validation/routeDataValidation';
-import categoryData from '../assets/categories.json';
+import { getCategories } from '../store/category-store';
 import { Category } from '../model/Category';
 import { NetResponse, translate } from '../Constants/Constants';
 
@@ -8,7 +8,7 @@ import { NetResponse, translate } from '../Constants/Constants';
 // import productData from '../assets/products.json';
 // const products: Product[] = productData;
 
-const categorys: Category[] = categoryData;
+const categorys: Category[] = getCategories();
 const routerCategoryProducts = Router({ mergeParams: true });
 
 routerCategoryProducts.all('/', (req, res, next) => {
