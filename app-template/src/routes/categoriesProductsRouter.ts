@@ -43,4 +43,7 @@ routerCategoryProducts.all('/', (req, res, next) => {
 //   res.status(translate(NetResponse.SUCCESS)).send(filteredArray);
 // });
 
+// What is the diffrence betwen middleware and this handler ?
+// function ->  (req: Request, res: Response, next: NextFunction): void => {
+
 export { routerCategoryProducts };
