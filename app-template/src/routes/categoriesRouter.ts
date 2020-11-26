@@ -4,19 +4,14 @@ import { getCategories } from '../store/category-store';
 import { Category } from '../model/Category';
 import { validateIdLength } from '../validation/routeDataValidation';
 import { NetResponse, translate } from '../Constants/Constants';
-
-import { Product } from '../model/Product';
-import productData from '../assets/products.json';
-
 import { routerCategoryProducts } from '../routes/categoriesProductsRouter';
 
 const categorys: Category[] = getCategories();
-const products: Product[] = productData;
 
 const routerCategory = Router();
 
 routerCategory.all('/:id', (req, res, next) => {
-  console.log('in routerCategory all validation');
+  console.log('in router Category all validation');
 
   const categoryId = req.params.id;
   const categoryIndex = categorys.findIndex((c) => c.id === categoryId);
@@ -62,13 +57,6 @@ routerCategory.delete('/:id', (req, res) => {
   res.sendStatus(translate(NetResponse.NO_CONTENT));
 });
 
-routerCategory.use('/:id/products', routerCategoryProducts);
-
-routerCategory.get('/:id/products', (req, res) => {
-  const filteredArray = products.filter((product) => {
-    return product.categoryId == res.locals.category.id;
-  });
-  res.status(translate(NetResponse.SUCCESS)).send(filteredArray);
-});
+routerCategory.use('/:id/', routerCategoryProducts);
 
 export { routerCategory };

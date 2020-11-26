@@ -4,15 +4,16 @@ import { getCategories } from '../store/category-store';
 import { Category } from '../model/Category';
 import { NetResponse, translate } from '../Constants/Constants';
 
-// import { Product } from '../model/Product';
-// import productData from '../assets/products.json';
-// const products: Product[] = productData;
+import { Product } from '../model/Product';
+import { getProducts } from '../store/product-store';
 
+const products: Product[] = getProducts();
 const categorys: Category[] = getCategories();
+
 const routerCategoryProducts = Router({ mergeParams: true });
 
-routerCategoryProducts.all('/', (req, res, next) => {
-  console.log('in routerCategoryProducts all validation');
+routerCategoryProducts.all('/:descriptionForPrevId', (req, res, next) => {
+  console.log('in router Category Products all validation');
 
   const categoryId = req.params.id;
   const categoryIndex = categorys.findIndex((c) => c.id === categoryId);
@@ -28,20 +29,15 @@ routerCategoryProducts.all('/', (req, res, next) => {
   }
   res.locals.categoryIndex = categoryIndex;
   res.locals.category = categorys[categoryIndex];
-
   next();
 });
 
-// AVIAT I WAS EXCPECTING THIS NEXT METHOD TO RUN AFTER THE ALL CHECK ABOVE,
-// BUT IT DOES NOT WHY?
-
-// routerCategoryProducts.get('/products', (req, res) => {
-//   console.log("in here")
-//   const filteredArray = products.filter((product) => {
-//     return product.categoryId == res.locals.category.id;
-//   });
-//   res.status(translate(NetResponse.SUCCESS)).send(filteredArray);
-// });
+routerCategoryProducts.get('/products', (req, res) => {
+  const filteredArray = products.filter((product) => {
+    return product.categoryId == res.locals.category.id;
+  });
+  res.status(translate(NetResponse.SUCCESS)).send(filteredArray);
+});
 
 // What is the diffrence betwen middleware and this handler ?
 // function ->  (req: Request, res: Response, next: NextFunction): void => {
