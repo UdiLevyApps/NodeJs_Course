@@ -5,11 +5,14 @@ import { getTheProducts } from '../middleware/productsGetter';
 import { NetResponse, translate } from '../Constants/Constants';
 import { middlewareValidateId } from '../middleware/middlewareValidator';
 import { getTheCategorys } from '../middleware/categoryGetter';
+import { createLogger } from '../utils/logger';
+
+const logger = createLogger('Categories Products');
 
 const routerCategoryProducts = Router({ mergeParams: true });
 
 routerCategoryProducts.all('/:descriptionForPrevId', middlewareValidateId, getTheCategorys, (req, res, next) => {
-  console.log('\nin router Category Products all validation');
+  logger.info('\nin router Category Products all validation');
   const categorys: Category[] = res.locals.categories;
   const categoryId = req.params.id;
   const categoryIndex = categorys.findIndex((c) => c.id === categoryId);
@@ -24,7 +27,7 @@ routerCategoryProducts.all('/:descriptionForPrevId', middlewareValidateId, getTh
 });
 
 routerCategoryProducts.get('/products', getTheProducts, (req, res) => {
-  console.log('\nin Get Category Products');
+  logger.info('\nin Get Category Products');
   const products: Product[] = res.locals.products;
   const filteredArray = products.filter((product) => {
     return product.categoryId == res.locals.category.id;

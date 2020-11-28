@@ -5,13 +5,14 @@ import { Category } from '../model/Category';
 import { NetResponse, translate } from '../Constants/Constants';
 import { routerCategoryProducts } from '../routes/categoriesProductsRouter';
 import { middlewareValidateId } from '../middleware/middlewareValidator';
+import { createLogger } from '../utils/logger';
 
 // const categorys: Category[] = getCategories();
-
+const logger = createLogger('Categories');
 const routerCategory = Router();
 
 routerCategory.all('/:id', middlewareValidateId, getTheCategorys, (req, res, next) => {
-  console.log('\nin router Category all validation');
+  logger.info(`\nin router Category all :id ${req.params.id}`);
   const categorys: Category[] = res.locals.categories;
   const categoryId = req.params.id;
   const categoryIndex = categorys.findIndex((c) => c.id === categoryId);
@@ -28,12 +29,12 @@ routerCategory.all('/:id', middlewareValidateId, getTheCategorys, (req, res, nex
 });
 
 routerCategory.get('/', getTheCategorys, (req, res) => {
-  console.log('\nin Get Categories');
+  logger.info('\nin Get Categories');
   res.status(translate(NetResponse.SUCCESS)).send(res.locals.categories);
 });
 
 routerCategory.post('/', getTheCategorys, (req, res) => {
-  console.log('\nin Post Category');
+  logger.info('\nin Post Category');
   const categorys: Category[] = res.locals.categories;
   const category = req.body as Category;
   category.id = generateId();
@@ -42,12 +43,12 @@ routerCategory.post('/', getTheCategorys, (req, res) => {
 });
 
 routerCategory.get('/:id', (req, res) => {
-  console.log('\nin Get Category ID');
+  logger.info('\nin Get Category ID');
   res.status(translate(NetResponse.SUCCESS)).send(res.locals.category);
 });
 
 routerCategory.put('/:id', (req, res) => {
-  console.log('\nin Put Category ID');
+  logger.info('\nin Put Category ID');
   const category = req.body as Category;
   category.id = res.locals.category.id;
   Object.assign(res.locals.category, category);
@@ -55,7 +56,7 @@ routerCategory.put('/:id', (req, res) => {
 });
 
 routerCategory.delete('/:id', getTheCategorys, (req, res) => {
-  console.log('\nin Delete Category ID');
+  logger.info('\nin Delete Category ID');
   const categorys: Category[] = res.locals.categories;
   categorys.splice(res.locals.categoryIndex, 1);
   res.sendStatus(translate(NetResponse.NO_CONTENT));

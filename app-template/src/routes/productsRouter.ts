@@ -4,11 +4,15 @@ import { Product } from '../model/Product';
 import { getTheProducts } from '../middleware/productsGetter';
 import { NetResponse, translate } from '../Constants/Constants';
 import { middlewareValidateId, middlewareValidateNameLength } from '../middleware/middlewareValidator';
+import { createLogger } from '../utils/logger';
+
+const logger = createLogger('Products');
 
 const routerProduct = Router();
 
 routerProduct.all('/:id', middlewareValidateId, getTheProducts, (req, res, next) => {
-  console.log('\nin routerProduct all :id validation');
+  // console.log('\nin routerProduct all :id ');
+  logger.info(`\nWinston Logger - in routerProduct all :id ${req.params.id}`);
   const products: Product[] = res.locals.products;
   const productId = req.params.id;
   const productIndex = products.findIndex((p) => p.id === productId);
@@ -25,12 +29,13 @@ routerProduct.all('/:id', middlewareValidateId, getTheProducts, (req, res, next)
 });
 
 routerProduct.get('/', getTheProducts, (req, res) => {
-  console.log('\nin Get products');
+  // console.log('\nin Get products');
+  logger.info(`\nWinston Logger - in Get products `);
   res.status(translate(NetResponse.SUCCESS)).send(res.locals.products);
 });
 
 routerProduct.post('/', middlewareValidateNameLength, getTheProducts, (req, res) => {
-  console.log('\nin Post product');
+  logger.info('\nin Post product');
   const products: Product[] = res.locals.products;
   const product = req.body as Product;
   product.id = generateId();
@@ -39,12 +44,12 @@ routerProduct.post('/', middlewareValidateNameLength, getTheProducts, (req, res)
 });
 
 routerProduct.get('/:id', (req, res) => {
-  console.log('\nin Get product with ID');
+  logger.info('\nin Get product with ID');
   res.status(translate(NetResponse.SUCCESS)).send(res.locals.product);
 });
 
 routerProduct.put('/:id', middlewareValidateNameLength, (req, res) => {
-  console.log('\nin Put product ID');
+  logger.info('\nin Put product ID');
   const product = req.body as Product;
   product.id = res.locals.product.id;
   Object.assign(res.locals.product, product);
@@ -52,7 +57,7 @@ routerProduct.put('/:id', middlewareValidateNameLength, (req, res) => {
 });
 
 routerProduct.delete('/:id', (req, res) => {
-  console.log('\nin Delete product ID');
+  logger.info('\nin Delete product ID');
   const products: Product[] = res.locals.products;
   products.splice(res.locals.productIndex, 1);
   res.sendStatus(translate(NetResponse.NO_CONTENT));

@@ -1,8 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { getProductsAsync } from '../store/product-store';
+import { createLogger } from '../utils/logger';
+
+const logger = createLogger('Middleware getTheProducts');
 
 export function getTheProducts(req: Request, res: Response, next: NextFunction): void {
-  console.log('\nin Get The Products Promise');
+  logger.info('\nin Get The Products Promise');
   getProductsAsync()
     .then((products) => {
       res.locals.products = products;

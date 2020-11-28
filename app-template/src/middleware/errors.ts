@@ -1,8 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import { NetResponse, netResponseStringValue, translate } from '../Constants/Constants';
+import { createLogger } from '../utils/logger';
+
+const logger = createLogger('client Error Handler');
 
 export function clientErrorHandler(err: Error, req: Request, res: Response, next: NextFunction): void {
-  console.log('\nMiddleware - client errors = ', err.message);
+  logger.error('\nMiddleware - client errors = ', err.message);
 
   switch (err.message) {
     case netResponseStringValue(NetResponse.BAD_REQUEST_VALIDATION):
@@ -13,7 +16,7 @@ export function clientErrorHandler(err: Error, req: Request, res: Response, next
       break;
 
     default:
-      console.log('\nError type not found');
+      logger.error('\nError type not found');
       next(err);
       break;
   }
