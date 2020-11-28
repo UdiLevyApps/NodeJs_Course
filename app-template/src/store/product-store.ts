@@ -4,3 +4,7 @@ import productData from '../assets/products.json';
 export function getProducts(): Product[] {
   return productData;
 }
+
+export function getProductsAsync(): Promise<Product[]> {
+  return Promise.resolve(getProducts());
+}

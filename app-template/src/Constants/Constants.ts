@@ -1,4 +1,4 @@
-enum NetResponse {
+export enum NetResponse {
   INVALID = 409,
   SUCCESS = 200,
   SUCCESS_CREATION = 201,
@@ -7,30 +7,30 @@ enum NetResponse {
   BAD_REQUEST_VALIDATION = 400,
 }
 
-function translate(x: NetResponse): number {
+export function translate(x: NetResponse): number {
   switch (x) {
     case NetResponse.INVALID:
-      console.log('Error response - INVALID');
+      console.log('\nError response - INVALID');
       break;
 
     case NetResponse.SUCCESS:
-      console.log('Success response');
+      console.log('\nSuccess response');
       break;
 
     case NetResponse.SUCCESS_CREATION:
-      console.log('Success create response');
+      console.log('\nSuccess create response');
       break;
 
     case NetResponse.NO_CONTENT:
-      console.log('Success response - NO_CONTENT');
+      console.log('\nSuccess response - NO_CONTENT');
       break;
 
     case NetResponse.NO_FOUND:
-      console.log('Error response - NO_FOUND');
+      console.log('\nError response - NO_FOUND');
       break;
 
     case NetResponse.BAD_REQUEST_VALIDATION:
-      console.log('Error response - BAD_REQUEST_VALIDATION');
+      console.log('\nError response - BAD_REQUEST_VALIDATION');
       break;
 
     default:
@@ -39,4 +39,13 @@ function translate(x: NetResponse): number {
   return x;
 }
 
-export { NetResponse, translate };
+export function netResponseStringValue(x: NetResponse): string {
+  return '' + x;
+}
+
+export function errorResponseMessage(x: NetResponse): Error {
+  return new Error(netResponseStringValue(x));
+}
+
+export const ID_LENGTH = 36;
+export const MIN_NAME_LENGTH = 3;

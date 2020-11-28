@@ -1,6 +1,4 @@
-// import { Product } from '../model/Product';
-const MIN_NAME_LENGTH = 3;
-const ID_LENGTH = 36;
+import { ID_LENGTH, MIN_NAME_LENGTH } from '../Constants/Constants';
 
 function validateIdLength(id: string): boolean {
   if (id.length != ID_LENGTH) {
