@@ -20,7 +20,6 @@ app.use('/api/categories', categoryRouter);
 app.get('/', (req, res) => {
   res.send('hello back');
 });
-
 // error middleware
 app.use(errorLogger());
 app.use(clientErrorHandler);
