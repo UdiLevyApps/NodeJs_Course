@@ -8,7 +8,7 @@
     "build:run": "tsc",
     "build:clean": "rimraf dist",
     "build": "npm run build:clean && npm run build:run",
-    "dev": "ts-node src/index.ts",
+    "dev": "ts-node -r dotenv/config src/index.ts",
     "start": "nodemon",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "npm run lint -- --fix",
@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-winston": "^4.0.5",
     "joi": "^17.3.0",
