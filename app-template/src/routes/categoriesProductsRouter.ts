@@ -30,6 +30,7 @@ routerCategoryProducts.get('/products', getTheProducts, (req, res) => {
   logger.info('\nin Get Category Products');
   const products: Product[] = res.locals.products;
   const filteredArray = products.filter((product) => {
+
     return product.categoryId == res.locals.category.id;
   });
   res.status(translate(NetResponse.SUCCESS)).send(filteredArray);
