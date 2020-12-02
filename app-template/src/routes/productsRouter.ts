@@ -5,10 +5,19 @@ import { getTheProducts } from '../middleware/productsGetter';
 import { NetResponse, translate } from '../Constants/Constants';
 import { middlewareValidateId, middlewareValidateNameLength } from '../middleware/middlewareValidator';
 import { createLogger } from '../utils/logger';
+import { authenticate, authorize } from '../middleware/auth';
+import { UserRole } from '../model/credentials';
 
 const logger = createLogger('Products');
 
 const routerProduct = Router();
+
+routerProduct.all('*', authenticate(), (req, res, next) => {
+  // console.log('\nin routerProduct all :id ');
+
+  logger.info(`\nWinston Logger - in ALL authenticate `);
+  next();
+});
 
 routerProduct.all('/:id', middlewareValidateId, getTheProducts, (req, res, next) => {
   // console.log('\nin routerProduct all :id ');
@@ -34,7 +43,7 @@ routerProduct.get('/', getTheProducts, (req, res) => {
   res.status(translate(NetResponse.SUCCESS)).send(res.locals.products);
 });
 
-routerProduct.post('/', middlewareValidateNameLength, getTheProducts, (req, res) => {
+routerProduct.post('/', authorize(UserRole.Admin), middlewareValidateNameLength, getTheProducts, (req, res) => {
   logger.info('\nin Post product');
   const products: Product[] = res.locals.products;
   const product = req.body as Product;
@@ -48,7 +57,7 @@ routerProduct.get('/:id', (req, res) => {
   res.status(translate(NetResponse.SUCCESS)).send(res.locals.product);
 });
 
-routerProduct.put('/:id', middlewareValidateNameLength, (req, res) => {
+routerProduct.put('/:id', authorize(UserRole.Admin), middlewareValidateNameLength, (req, res) => {
   logger.info('\nin Put product ID');
   const product = req.body as Product;
   product.id = res.locals.product.id;
@@ -56,7 +65,7 @@ routerProduct.put('/:id', middlewareValidateNameLength, (req, res) => {
   res.status(translate(NetResponse.SUCCESS)).send(res.locals.product);
 });
 
-routerProduct.delete('/:id', (req, res) => {
+routerProduct.delete('/:id', authorize(UserRole.Admin), (req, res) => {
   logger.info('\nin Delete product ID');
   const products: Product[] = res.locals.products;
   products.splice(res.locals.productIndex, 1);

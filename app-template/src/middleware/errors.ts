@@ -15,6 +15,14 @@ export function clientErrorHandler(err: Error, req: Request, res: Response, next
       res.sendStatus(translate(NetResponse.INVALID));
       break;
 
+      case netResponseStringValue(NetResponse.UN_AUTHORIZED):
+        res.sendStatus(translate(NetResponse.UN_AUTHORIZED));
+        break;
+
+        case netResponseStringValue(NetResponse.FORBIDDEN):
+          res.sendStatus(translate(NetResponse.FORBIDDEN));
+          break;
+
     default:
       logger.error('\nError type not found');
       next(err);

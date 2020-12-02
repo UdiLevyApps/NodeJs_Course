@@ -5,6 +5,8 @@ export enum NetResponse {
   NO_CONTENT = 204,
   NO_FOUND = 404,
   BAD_REQUEST_VALIDATION = 400,
+  UN_AUTHORIZED = 401, // some thing wrong with token , no token oor no valid token
+  FORBIDDEN = 403, // user authenticated user but no authorized for this request
 }
 
 export function translate(x: NetResponse): number {
@@ -31,6 +33,14 @@ export function translate(x: NetResponse): number {
 
     case NetResponse.BAD_REQUEST_VALIDATION:
       console.log('\nError response - BAD_REQUEST_VALIDATION');
+      break;
+
+    case NetResponse.UN_AUTHORIZED:
+      console.log('\nError response - TOKEN MISSING OR INVALID');
+      break;
+
+    case NetResponse.FORBIDDEN:
+      console.log('\nError response - FORBIDDEN TO USER');
       break;
 
     default:
