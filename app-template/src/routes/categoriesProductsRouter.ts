@@ -12,6 +12,7 @@ const categorys: Category[] = getCategories();
 
 const routerCategoryProducts = Router({ mergeParams: true });
 
+
 routerCategoryProducts.all('/:descriptionForPrevId', (req, res, next) => {
   console.log('in router Category Products all validation');
 
