@@ -1,7 +1,4 @@
 import { UserCredential, UserRole } from '../model/credentials';
-// import { User } from '../model/user';
-// import { Project } from '../model/project';
-
 interface StoreType {
   credentials: UserCredential[];
 }
