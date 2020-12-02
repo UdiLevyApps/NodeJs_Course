@@ -17,3 +17,7 @@ export function createLoggerConfig() {
     ),
   };
 }
+export const createExpressWinstonOptions = () => ({
+  transports: [new winston.transports.Console()],
+  format: winston.format.combine(winston.format.colorize(), winston.format.json(), winston.format.prettyPrint()),
+});

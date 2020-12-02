@@ -1,4 +1,4 @@
-import { createLoggerConfig } from '../utils/logger-settings';
+import { createExpressWinstonOptions, createLoggerConfig } from '../utils/logger-settings';
 import winston from 'winston';
 
 export function log(...p: unknown[]): void {
@@ -6,7 +6,7 @@ export function log(...p: unknown[]): void {
 }
 
 export const createLogger = (name: string) => {
-  const options = createLoggerConfig();
+  const options = createExpressWinstonOptions(); //createLoggerConfig();
 
   const logger = winston.createLogger({
     transports: options.transports,

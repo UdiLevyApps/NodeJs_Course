@@ -6,7 +6,7 @@ import routes from './routes';
 import { clientErrorHandler } from './middleware/errors';
 import { requestLog } from './middleware/request-log';
 import { traceLogger, errorLogger } from './middleware/log';
-// import path from 'path';
+import path from 'path';
 import { initPassport } from './utils/passport';
 
 initPassport();
@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(cors());
 app.use(requestLog); // PRIVATE logger
 
-app.use(traceLogger());
+// app.use(traceLogger());
 
 // static file example will show the file by witing his path like
 //http://localhost:8000/file.txt
@@ -25,7 +25,7 @@ app.use(traceLogger());
 // and inside packages.js the "scripts": should look like this - if the root filder is public
 // "copy-files": "copyfiles -u 2 src/public/**/* dist/public",
 // "build": "npm run build:clean && npm run build:run && npm run copy-files",
-// app.use('/assets', express.static(path.join(__dirname, 'public')));
+app.use('/assets', express.static(path.join(__dirname, 'public')));
 
 // app.use('/api/products', productRouter);
 // app.use('/api/categories', categoryRouter);
@@ -37,7 +37,7 @@ app.get('/', (req, res) => {
 });
 
 // error middleware
-app.use(errorLogger());
+// app.use(errorLogger());
 app.use(clientErrorHandler);
 
 export { app };

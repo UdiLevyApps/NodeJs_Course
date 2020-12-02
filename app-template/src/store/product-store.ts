@@ -1,10 +1,28 @@
 import { Product } from '../model/Product';
-import productData from '../assets/products.json';
+import { createHttpClient } from '../utils/http-client';
 
-export function getProducts(): Product[] {
-  return productData;
+let products: Product[];
+
+export async function getProducts(): Promise<Product[]> {
+  return new Promise(async (res, rej) => {
+    try {
+      if (!products) {
+        const productsClient = createHttpClient(`${'http://localhost:8000'}/assets`);
+        products = await productsClient('/staticProducts.json').then((r) => r.json());
+      }
+      res(products);
+    } catch (error) {
+      rej(error);
+    }
+  });
 }
 
 export function getProductsAsync(): Promise<Product[]> {
-  return Promise.resolve(getProducts());
+  return new Promise((res, rej) => {
+    try {
+      res(getProducts());
+    } catch (error) {
+      rej(error);
+    }
+  });
 }

@@ -30,13 +30,6 @@ router.post('/', (req: express.Request, res: express.Response, next: express.Nex
         }
       });
 
-      // jwt.sign(user, jwtSecret, { algorithm: 'HS256' }, function (error, token) {
-      //   if (error) {
-      //     res.status(translate(NetResponse.BAD_REQUEST_VALIDATION)).send(error);
-      //   } else {
-      //     res.status(translate(NetResponse.SUCCESS)).send({ user, token });
-      //   }
-      // });
     });
   });
 
