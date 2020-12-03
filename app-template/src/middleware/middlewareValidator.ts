@@ -1,8 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { Product } from '../model/Product';
-import { errorResponseMessage, NetResponse } from '../Constants/Constants';
+import { errorResponseMessage, NetResponse, translate } from '../Constants/Constants';
 import { createLogger } from '../utils/logger';
 import { productIdSchemaValidation, productNameSchemaValidation } from '../validation/joiValidators';
+import { Category } from '../model/Category';
 
 const logger = createLogger('middleWare Validator');
 
@@ -29,7 +30,6 @@ export function middlewareValidateNameLength(req: Request, res: Response, next: 
   next();
 }
 
-
 export function getSelectedProductWithId(req: Request, res: Response, next: NextFunction): void {
   const products: Product[] = res.locals.products;
   const productId = req.params.id;
@@ -44,5 +44,20 @@ export function getSelectedProductWithId(req: Request, res: Response, next: Next
   res.locals.productIndex = productIndex;
   res.locals.product = products[productIndex];
 
+  next();
+}
+
+export function getSelectedCategoryWithId(req: Request, res: Response, next: NextFunction): void {
+  const categorys: Category[] = res.locals.categories;
+  const categoryId = req.params.id;
+  const categoryIndex = categorys.findIndex((c) => c.id === categoryId);
+
+  if (categoryIndex < 0) {
+    res.sendStatus(translate(NetResponse.NO_FOUND));
+    return;
+  }
+
+  res.locals.categoryIndex = categoryIndex;
+  res.locals.category = categorys[categoryIndex];
   next();
 }

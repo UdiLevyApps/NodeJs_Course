@@ -4,26 +4,15 @@ import { getTheCategorys } from '../middleware/categoryGetter';
 import { Category } from '../model/Category';
 import { NetResponse, translate } from '../Constants/Constants';
 import { routerCategoryProducts } from '../routes/categoriesProductsRouter';
-import { middlewareValidateId } from '../middleware/middlewareValidator';
+import { getSelectedCategoryWithId, middlewareValidateId } from '../middleware/middlewareValidator';
 import { createLogger } from '../utils/logger';
 
 // const categorys: Category[] = getCategories();
 const logger = createLogger('Categories');
 const routerCategory = Router();
 
-routerCategory.all('/:id', middlewareValidateId, getTheCategorys, (req, res, next) => {
+routerCategory.all('/:id', middlewareValidateId, getTheCategorys, getSelectedCategoryWithId, (req, res, next) => {
   logger.info(`\nin router Category all :id ${req.params.id}`);
-  const categorys: Category[] = res.locals.categories;
-  const categoryId = req.params.id;
-  const categoryIndex = categorys.findIndex((c) => c.id === categoryId);
-
-  if (categoryIndex < 0) {
-    res.sendStatus(translate(NetResponse.NO_FOUND));
-    return;
-  }
-
-  res.locals.categoryIndex = categoryIndex;
-  res.locals.category = categorys[categoryIndex];
 
   next();
 });

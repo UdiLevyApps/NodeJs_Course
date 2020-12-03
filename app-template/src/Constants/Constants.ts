@@ -1,8 +1,8 @@
 export enum NetResponse {
-  INVALID = 409,
   SUCCESS = 200,
   SUCCESS_CREATION = 201,
   NO_CONTENT = 204,
+  INVALID = 409,
   NO_FOUND = 404,
   BAD_REQUEST_VALIDATION = 400,
   UN_AUTHORIZED = 401, // some thing wrong with token , no token oor no valid token
