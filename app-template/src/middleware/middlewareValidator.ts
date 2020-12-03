@@ -28,3 +28,21 @@ export function middlewareValidateNameLength(req: Request, res: Response, next: 
   }
   next();
 }
+
+
+export function getSelectedProductWithId(req: Request, res: Response, next: NextFunction): void {
+  const products: Product[] = res.locals.products;
+  const productId = req.params.id;
+  const productIndex = products.findIndex((p) => p.id === productId);
+
+  if (productIndex < 0) {
+    // const val = errorResponseMessage(NetResponse.NO_FOUND);
+    throw errorResponseMessage(NetResponse.NO_FOUND);
+    return;
+  }
+
+  res.locals.productIndex = productIndex;
+  res.locals.product = products[productIndex];
+
+  next();
+}

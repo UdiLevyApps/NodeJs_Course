@@ -3,7 +3,7 @@ import { generateId } from '../utils/id-helper';
 import { Product } from '../model/Product';
 import { getTheProducts } from '../middleware/productsGetter';
 import { NetResponse, translate } from '../Constants/Constants';
-import { middlewareValidateId, middlewareValidateNameLength } from '../middleware/middlewareValidator';
+import { getSelectedProductWithId, middlewareValidateId, middlewareValidateNameLength } from '../middleware/middlewareValidator';
 import { createLogger } from '../utils/logger';
 import { authenticate, authorize } from '../middleware/auth';
 import { UserRole } from '../model/credentials';
@@ -19,21 +19,7 @@ routerProduct.all('*', authenticate(), (req, res, next) => {
   next();
 });
 
-routerProduct.all('/:id', middlewareValidateId, getTheProducts, (req, res, next) => {
-  // console.log('\nin routerProduct all :id ');
-  logger.info(`\nWinston Logger - in routerProduct all :id ${req.params.id}`);
-  const products: Product[] = res.locals.products;
-  const productId = req.params.id;
-  const productIndex = products.findIndex((p) => p.id === productId);
-
-  if (productIndex < 0) {
-    res.sendStatus(translate(NetResponse.NO_FOUND));
-    return;
-  }
-
-  res.locals.productIndex = productIndex;
-  res.locals.product = products[productIndex];
-
+routerProduct.all('/:id', middlewareValidateId, getTheProducts, getSelectedProductWithId, (req, res, next) => {
   next();
 });
 

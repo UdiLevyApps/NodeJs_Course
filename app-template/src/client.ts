@@ -2,7 +2,6 @@ import { createHttpClient } from './utils/http-client';
 import { createLogger } from './utils/logger';
 
 import { Product } from './model/Product';
-
 const logger = createLogger('client-sample');
 
 export async function makeCalls(baseUrl: string) {
