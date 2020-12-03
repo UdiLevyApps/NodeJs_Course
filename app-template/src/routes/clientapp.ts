@@ -5,7 +5,7 @@ import { getTheCategorys } from '../middleware/categoryGetter';
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.render('login', { pageTitle: 'Login Page' });
+  res.render('login', { pageTitle: 'Login Page :-)' });
 });
 
 router.get('/home', (req, res) => {

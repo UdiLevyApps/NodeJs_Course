@@ -29,6 +29,10 @@ app.use(requestLog); // PRIVATE logger
 // "copy-files": "copyfiles -u 2 src/public/**/* dist/public",
 // "build": "npm run build:clean && npm run build:run && npm run copy-files",
 
+// First - the URL (just like any other middleware)
+// Second - the physical folder on the disk
+app.use('/static', express.static(path.join(__dirname, 'static')));
+
 app.set('views', path.join(__dirname, 'views'));
 app.engine(
   'handlebars',
