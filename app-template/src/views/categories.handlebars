@@ -1,0 +1,13 @@
+<ul>
+  {{#each categorys}}
+  <li>
+    {{increment @index}}. {{titleCase this.name}}
+    {{!-- {{this.name}}
+    {{#if this.discontinued}}
+    <span>Project is discontinued.</span>
+    {{else}}
+    </span>Keeps on ticking.</span>
+    {{/if}} --}}
+  </li>
+  {{/each}}
+</ul>

@@ -2,8 +2,14 @@
 import { routerCategory as categoryRouter } from './categoriesRouter';
 import { routerProduct as productRouter } from './productsRouter';
 import login from './login';
-
-export default [
+import clientapp from './clientapp';
+export const clients = [
+  {
+    prefix: '/',
+    router: clientapp,
+  },
+];
+export const apis = [
   {
     prefix: '/categories',
     router: categoryRouter,
