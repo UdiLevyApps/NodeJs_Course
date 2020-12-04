@@ -5,7 +5,7 @@ function login() {
   const email = document.querySelector('#email').value;
   const password = document.querySelector('#password').value;
 
-  const url = `api/login`;
+  const url = `/api/login`;
   const data = { email, password };
   fetch(url, {
     method: 'POST',
@@ -23,6 +23,6 @@ function login() {
     })
     .then((o) => {
       localStorage.setItem('credentials', o.token);
-      location.href = 'app/home';
+      location.href = '/app/home';
     });
 }
